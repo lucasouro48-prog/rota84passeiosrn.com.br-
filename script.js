@@ -1,33 +1,111 @@
-const menuToggle=document.querySelector('.menu-toggle');
-const nav=document.querySelector('nav');
-if(menuToggle){
-  menuToggle.onclick=()=>nav.classList.toggle('active');
+:root{
+  --blue:#149ce6;
+  --wine:#156b79;
+  --white:#ffffff;
+  --max-width:1100px;
+  --radius:8px;
+  --shadow:0 6px 18px rgba(0,0,0,.12);
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
 }
 
-let carrinho=[];
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#fff,#f4f9ff)}
+.container{max-width:var(--max-width);margin:auto;padding:24px}
 
-function adicionar(nome,valor){
-  carrinho.push({nome,valor});
-  alert("Passeio adicionado!");
-  localStorage.setItem("carrinho",JSON.stringify(carrinho));
+header{
+  position:fixed;top:0;left:0;width:100%;
+  background:linear-gradient(90deg,var(--blue),var(--wine));
+  color:#fff;display:flex;align-items:center;
+  padding:12px 20px;z-index:1000
+}
+.brand{display:flex;gap:10px;align-items:center;font-weight:700}
+.logo{width:40px;height:40px;border-radius:8px;
+background:#066eab;display:flex;align-items:center;justify-content:center}
+
+nav{margin-left:auto;display:flex;gap:14px}
+nav a{color:#fff;text-decoration:none;font-weight:600}
+.menu-toggle{display:none;flex-direction:column;gap:4px;cursor:pointer}
+.menu-toggle span{height:3px;width:25px;background:#fff}
+
+.lang-select{margin-left:12px;border-radius:6px;padding:4px}
+
+.hero{
+  margin-top:90px;display:flex;gap:20px;
+  background:#fff;border-radius:12px;padding:24px;box-shadow:var(--shadow)
+}
+.hero img{width:100%;border-radius:10px}
+.hero .photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:380px}
+
+.section{margin-top:30px;background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+
+.btn{background:var(--blue);color:#fff;border:none;padding:10px 16px;
+border-radius:8px;font-weight:700;cursor:pointer}
+.btn.secondary{background:var(--wine)}
+
+.footer{text-align:center;margin:30px 0;color:#555}
+
+@media(max-width:768px){
+  nav{display:none;position:absolute;top:65px;left:0;width:100%;
+  background:#fff;color:#333;flex-direction:column}
+  nav a{color:#333;padding:10px}
+  nav.active{display:flex}
+  .menu-toggle{display:flex}
+  .hero{flex-direction:column}
+  .hero .photos{width:100%}
 }
 
-function carregarCarrinho(){
-  carrinho=JSON.parse(localStorage.getItem("carrinho"))||[];
-  const lista=document.getElementById("lista");
-  let total=0;
-  lista.innerHTML="";
-  carrinho.forEach(i=>{
-    total+=i.valor;
-    lista.innerHTML+=`<li>${i.nome} - R$ ${i.valor}</li>`;
-  });
-  document.getElementById("total").innerText=total;
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
 }
 
-function finalizar(){
-  const nome=document.getElementById("nome").value;
-  const tel=document.getElementById("tel").value;
-  let msg=`Reserva Thunder:%0ACliente: ${nome}%0ATelefone: ${tel}%0A`;
-  carrinho.forEach(i=>msg+=`${i.nome} - R$${i.valor}%0A`);
-  window.open(`https://wa.me/5599999999999?text=${msg}`);
+.tour-card{
+  background:#fff;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 12px 30px rgba(0,0,0,.12);
+  display:flex;
+  flex-direction:column;
+  transition:.3s;
 }
+
+.tour-card:hover{
+  transform:translateY(-6px);
+}
+
+.tour-card img{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+}
+
+.tour-content{
+  padding:18px;
+  flex:1;
+}
+
+.tour-content h3{
+  margin:0;
+  color:var(--blue);
+  font-size:20px;
+}
+
+.tour-content p{
+  font-size:14px;
+  color:#555;
+  margin:8px 0;
+}
+
+.tour-content .info{
+  font-size:13px;
+  color:#333;
+}
+
+.tour-card .btn{
+  margin:14px;
+  text-align:center;
+}
+
